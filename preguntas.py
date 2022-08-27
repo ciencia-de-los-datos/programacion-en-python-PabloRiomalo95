@@ -12,6 +12,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 """
 from operator import itemgetter
 import datetime
+import itertools
 
 def file_clean():
     tup_lst=[]
@@ -156,7 +157,29 @@ def pregunta_05():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    lista_rta=[]
+    for t in range(0,len(tup_lst)):
+        e1=tup_lst[t][0]
+        e2=int(tup_lst[t][1])
+        t=(e1,e2)
+        lista.append(t)
+    lista=sorted(lista,key=itemgetter(0))
+    
+    key_func=lambda x: x[0]
+    for key,group in itertools.groupby(lista,key_func):
+        min=100
+        max=0
+        group=list(group)
+        for k in group:
+            if min>k[1]:
+                min=k[1]
+            if max<k[1]:
+                max=k[1]
+        h=(key,max,min)
+        lista_rta.append(h)
+    return lista_rta
 
 
 def pregunta_06():
