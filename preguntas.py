@@ -9,8 +9,20 @@ básicas.
 
 Utilice el archivo `data.csv` para resolver las preguntas.
 
-
 """
+
+
+
+def file_clean():
+    tup_lst=[]
+    with open('data.csv') as file:
+        for line in file:
+            line=line.replace(chr(32),'')
+            line=line.replace('\n','')
+            tupla = tuple(list(line.split('\t')))
+            tup_lst.append(tupla)
+            
+    return tup_lst
 
 
 def pregunta_01():
@@ -21,7 +33,15 @@ def pregunta_01():
     214
 
     """
-    return 225
+    tup_lst=file_clean()
+    counter=0
+    for i in range(0,len(tup_lst)):
+        counter+=int(tup_lst[i][1])
+    
+    return counter  
+
+
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
 def pregunta_02():
