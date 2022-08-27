@@ -10,8 +10,8 @@ básicas.
 Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
-
-
+from operator import itemgetter
+import datetime
 
 def file_clean():
     tup_lst=[]
@@ -41,9 +41,6 @@ def pregunta_01():
     return counter  
 
 
-# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-
 def pregunta_02():
     """
     Retorne la cantidad de registros por cada letra de la primera columna como la lista
@@ -57,9 +54,17 @@ def pregunta_02():
         ("D", 6),
         ("E", 14),
     ]
-
     """
-    return
+    tup_lst=file_clean()
+    freq={}
+    lista=[]
+    for t in range(0,len(tup_lst)):
+        e=tup_lst[t][0]
+        lista.append(e)
+    for i in lista:
+        freq[i]=freq.setdefault(i, 0) + 1
+    rta=sorted(list(freq.items()),key=itemgetter(0))
+    return rta
 
 
 def pregunta_03():
@@ -77,7 +82,20 @@ def pregunta_03():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    counter = {}
+    for t in range(0,len(tup_lst)):
+        tupla_temp=(tup_lst[t][0],int(tup_lst[t][1]))
+        lista.append(tupla_temp)
+        
+    for key, value in lista:
+        if key in counter:
+            counter[key] += value
+        else:
+            counter[key] = value
+    rta=sorted([(key, counter[key]) for key in counter],key=itemgetter(0))
+    return rta  
 
 
 def pregunta_04():
@@ -102,7 +120,25 @@ def pregunta_04():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    for i in range(0,len(tup_lst)):
+        e=tup_lst[i][2]
+        try:
+            e=datetime.datetime.strptime(e,'%Y-%m-%d')
+            e=str(datetime.datetime.strftime(e,'%m'))
+            lista.append(e)
+        except:
+            # Error en fecha. Febrero de 1999 no era bisiesto, solo tenía 28 días
+            e=str(e[5:7])
+            lista.append(e)
+    
+    freq={}
+    for i in lista:
+        freq[i]=freq.setdefault(i, 0) + 1
+    rta=sorted(list(freq.items()),key=itemgetter(0))
+            
+    return rta
 
 
 def pregunta_05():
