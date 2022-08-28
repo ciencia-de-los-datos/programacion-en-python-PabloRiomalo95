@@ -260,7 +260,30 @@ def pregunta_07():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    ind=[]
+    lista_rta=[]
+    
+    for t in range(0,len(tup_lst)):
+        e1=int(tup_lst[t][1])
+        e2=tup_lst[t][0]
+        ind.append(e1)    
+        u=(e1,e2)
+        lista.append(u)
+    
+    ind=set(ind)
+
+    for j in ind:
+        letters=None
+        letters=[]
+        rta=None 
+        for k in lista:
+            if k[0]==j:
+                letters.append(k[1])
+        rta=(j,letters)        
+        lista_rta.append(rta)       
+    return lista_rta     
 
 
 def pregunta_08():
@@ -285,7 +308,31 @@ def pregunta_08():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    ind=[]
+    lista_rta=[]
+    
+    for t in range(0,len(tup_lst)):
+        e1=int(tup_lst[t][1])
+        e2=tup_lst[t][0]
+        ind.append(e1)    
+        u=(e1,e2)
+        lista.append(u)
+    
+    ind=set(ind)
+
+    for j in ind:
+        letters=None
+        letters=[]
+        rta=None 
+        for k in lista:
+            if k[0]==j:
+                letters.append(k[1])
+        letters=sorted(list(set(letters)),reverse=False)
+        rta=(j,letters)        
+        lista_rta.append(rta)       
+    return lista_rta  
 
 
 def pregunta_09():
