@@ -204,7 +204,39 @@ def pregunta_06():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    lista2=[]
+    lista_rta=[]
+    
+    for t in range(0,len(tup_lst)):
+        e1=list(str((tup_lst[t][4])).split(','))
+        e1=tuple(e1)
+        lista.append(e1)
+    
+    for r in lista:
+        f=None
+        for g in r:
+            z1=g[:3]
+            z2=int(g[4:])
+            f=(z1,z2)
+            lista2.append(f)
+        
+    lista2=sorted(lista2,key=itemgetter(0))
+    key_func=lambda x: x[0]
+    
+    for key,group in itertools.groupby(lista2,key_func):
+        min=100
+        max=-100
+        group=list(group)
+        for k in group:
+            if min>k[1]:
+                min=k[1]
+            if max<k[1]:
+                max=k[1]
+        h=(key,min,max)
+        lista_rta.append(h)
+    return lista_rta
 
 
 def pregunta_07():
