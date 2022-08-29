@@ -401,10 +401,18 @@ def pregunta_10():
         ("E", 2, 3),
         ("E", 3, 3),
     ]
-
-
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    for t in range(0,len(tup_lst)):
+        e1=tup_lst[t][0]
+        e2=len(list(str((tup_lst[t][3])).split(',')))
+        e3=tup_lst[t][4]
+        e3=e3.count(',')+1
+        f=(e1,e2,e3)
+        lista.append(f)
+
+    return lista
 
 
 def pregunta_11():
