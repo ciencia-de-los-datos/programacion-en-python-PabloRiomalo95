@@ -355,7 +355,35 @@ def pregunta_09():
     }
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    letters=[]    
+    for t in range(0,len(tup_lst)):
+        e1=list(str((tup_lst[t][4])).split(','))
+        e1=tuple(e1)
+        lista.append(e1)
+    
+    for r in lista:
+        for g in r:
+            z1=g[:3]
+            letters.append(z1)
+    
+    ind=set(letters)
+    rta=[]
+    for j in ind:
+        cnt=0
+        for k in letters:
+            if k==j:
+                cnt+=1
+        e=(j,cnt)        
+        rta.append(e)
+    rta=sorted(rta,key=itemgetter(0))          
+    
+    counter = {}
+    for y in rta:
+        counter[y[0]]=y[1]
+    
+    return counter
 
 
 def pregunta_10():
