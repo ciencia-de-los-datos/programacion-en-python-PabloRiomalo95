@@ -438,6 +438,7 @@ def pregunta_11():
     letters=[]
     buchst=[]
     lista_rta=[]
+    dicc_rta={}
 
     for t in range(0,len(tup_lst)):
         e=list(str((tup_lst[t][3])).split(','))
@@ -471,8 +472,11 @@ def pregunta_11():
                     suma+=i[0]   
         h=(k,suma)
         lista_rta.append(h)
-    
-    return lista_rta
+        
+    for elemento in lista_rta:
+        dicc_rta[elemento[0]]=elemento[1]
+        
+    return dicc_rta
 
 
 def pregunta_12():
