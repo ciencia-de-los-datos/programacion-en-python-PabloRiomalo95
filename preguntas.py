@@ -9,8 +9,23 @@ básicas.
 
 Utilice el archivo `data.csv` para resolver las preguntas.
 
-
 """
+
+from operator import itemgetter
+import datetime
+import itertools
+
+
+def file_clean():
+    tup_lst=[]
+    with open('data.csv') as file:
+        for line in file:
+            line=line.replace(chr(32),'')
+            line=line.replace('\n','')
+            tupla = tuple(list(line.split('\t')))
+            tup_lst.append(tupla)
+            
+    return tup_lst
 
 
 def pregunta_01():
@@ -21,7 +36,12 @@ def pregunta_01():
     214
 
     """
-    return
+    tup_lst=file_clean()
+    counter=0
+    for i in range(0,len(tup_lst)):
+        counter+=int(tup_lst[i][1])
+    
+    return counter  
 
 
 def pregunta_02():
@@ -37,9 +57,17 @@ def pregunta_02():
         ("D", 6),
         ("E", 14),
     ]
-
     """
-    return
+    tup_lst=file_clean()
+    freq={}
+    lista=[]
+    for t in range(0,len(tup_lst)):
+        e=tup_lst[t][0]
+        lista.append(e)
+    for i in lista:
+        freq[i]=freq.setdefault(i, 0) + 1
+    rta=sorted(list(freq.items()),key=itemgetter(0))
+    return rta
 
 
 def pregunta_03():
@@ -57,7 +85,20 @@ def pregunta_03():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    counter = {}
+    for t in range(0,len(tup_lst)):
+        tupla_temp=(tup_lst[t][0],int(tup_lst[t][1]))
+        lista.append(tupla_temp)
+        
+    for key, value in lista:
+        if key in counter:
+            counter[key] += value
+        else:
+            counter[key] = value
+    rta=sorted([(key, counter[key]) for key in counter],key=itemgetter(0))
+    return rta  
 
 
 def pregunta_04():
@@ -82,7 +123,25 @@ def pregunta_04():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    for i in range(0,len(tup_lst)):
+        e=tup_lst[i][2]
+        try:
+            e=datetime.datetime.strptime(e,'%Y-%m-%d')
+            e=str(datetime.datetime.strftime(e,'%m'))
+            lista.append(e)
+        except:
+            # Error en fecha. Febrero de 1999 no era bisiesto, solo tenía 28 días
+            e=str(e[5:7])
+            lista.append(e)
+    
+    freq={}
+    for i in lista:
+        freq[i]=freq.setdefault(i, 0) + 1
+    rta=sorted(list(freq.items()),key=itemgetter(0))
+            
+    return rta
 
 
 def pregunta_05():
@@ -100,7 +159,29 @@ def pregunta_05():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    lista_rta=[]
+    for t in range(0,len(tup_lst)):
+        e1=tup_lst[t][0]
+        e2=int(tup_lst[t][1])
+        t=(e1,e2)
+        lista.append(t)
+    lista=sorted(lista,key=itemgetter(0))
+    
+    key_func=lambda x: x[0]
+    for key,group in itertools.groupby(lista,key_func):
+        min=100
+        max=0
+        group=list(group)
+        for k in group:
+            if min>k[1]:
+                min=k[1]
+            if max<k[1]:
+                max=k[1]
+        h=(key,max,min)
+        lista_rta.append(h)
+    return lista_rta
 
 
 def pregunta_06():
@@ -125,7 +206,39 @@ def pregunta_06():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    lista2=[]
+    lista_rta=[]
+    
+    for t in range(0,len(tup_lst)):
+        e1=list(str((tup_lst[t][4])).split(','))
+        e1=tuple(e1)
+        lista.append(e1)
+    
+    for r in lista:
+        f=None
+        for g in r:
+            z1=g[:3]
+            z2=int(g[4:])
+            f=(z1,z2)
+            lista2.append(f)
+        
+    lista2=sorted(lista2,key=itemgetter(0))
+    key_func=lambda x: x[0]
+    
+    for key,group in itertools.groupby(lista2,key_func):
+        min=100
+        max=-100
+        group=list(group)
+        for k in group:
+            if min>k[1]:
+                min=k[1]
+            if max<k[1]:
+                max=k[1]
+        h=(key,min,max)
+        lista_rta.append(h)
+    return lista_rta
 
 
 def pregunta_07():
@@ -149,7 +262,30 @@ def pregunta_07():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    ind=[]
+    lista_rta=[]
+    
+    for t in range(0,len(tup_lst)):
+        e1=int(tup_lst[t][1])
+        e2=tup_lst[t][0]
+        ind.append(e1)    
+        u=(e1,e2)
+        lista.append(u)
+    
+    ind=set(ind)
+
+    for j in ind:
+        letters=None
+        letters=[]
+        rta=None 
+        for k in lista:
+            if k[0]==j:
+                letters.append(k[1])
+        rta=(j,letters)        
+        lista_rta.append(rta)       
+    return lista_rta     
 
 
 def pregunta_08():
@@ -174,7 +310,31 @@ def pregunta_08():
     ]
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    ind=[]
+    lista_rta=[]
+    
+    for t in range(0,len(tup_lst)):
+        e1=int(tup_lst[t][1])
+        e2=tup_lst[t][0]
+        ind.append(e1)    
+        u=(e1,e2)
+        lista.append(u)
+    
+    ind=set(ind)
+
+    for j in ind:
+        letters=None
+        letters=[]
+        rta=None 
+        for k in lista:
+            if k[0]==j:
+                letters.append(k[1])
+        letters=sorted(list(set(letters)),reverse=False)
+        rta=(j,letters)        
+        lista_rta.append(rta)       
+    return lista_rta  
 
 
 def pregunta_09():
@@ -197,7 +357,35 @@ def pregunta_09():
     }
 
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    letters=[]    
+    for t in range(0,len(tup_lst)):
+        e1=list(str((tup_lst[t][4])).split(','))
+        e1=tuple(e1)
+        lista.append(e1)
+    
+    for r in lista:
+        for g in r:
+            z1=g[:3]
+            letters.append(z1)
+    
+    ind=set(letters)
+    rta=[]
+    for j in ind:
+        cnt=0
+        for k in letters:
+            if k==j:
+                cnt+=1
+        e=(j,cnt)        
+        rta.append(e)
+    rta=sorted(rta,key=itemgetter(0))          
+    
+    counter = {}
+    for y in rta:
+        counter[y[0]]=y[1]
+    
+    return counter
 
 
 def pregunta_10():
@@ -215,10 +403,18 @@ def pregunta_10():
         ("E", 2, 3),
         ("E", 3, 3),
     ]
-
-
     """
-    return
+    tup_lst=file_clean()
+    lista=[]
+    for t in range(0,len(tup_lst)):
+        e1=tup_lst[t][0]
+        e2=len(list(str((tup_lst[t][3])).split(',')))
+        e3=tup_lst[t][4]
+        e3=e3.count(',')+1
+        f=(e1,e2,e3)
+        lista.append(f)
+
+    return lista
 
 
 def pregunta_11():
@@ -236,10 +432,51 @@ def pregunta_11():
         "f": 134,
         "g": 35,
     }
-
-
     """
-    return
+    voll_liste=[]
+    tup_lst=file_clean()
+    letters=[]
+    buchst=[]
+    lista_rta=[]
+    dicc_rta={}
+
+    for t in range(0,len(tup_lst)):
+        e=list(str((tup_lst[t][3])).split(','))
+        l=tuple(e)
+        letters.append(l)
+        e.append(tup_lst[t][1])
+
+        def mixs(num):
+            try:
+                ele = int(num)
+                return (0, ele, '')
+            except ValueError:
+                return (1, num, '')
+
+        e.sort(key = mixs)
+        e[0]=int(e[0])
+        e=tuple(e)
+        voll_liste.append(e)
+
+    for p in letters:
+        for r in p: buchst.append(r)
+
+    letters=None
+    letters=sorted(list(set(buchst)),reverse=False)
+
+    for k in letters:
+        suma=0
+        for i in voll_liste:
+            for j in i:
+                if k==j:
+                    suma+=i[0]   
+        h=(k,suma)
+        lista_rta.append(h)
+        
+    for elemento in lista_rta:
+        dicc_rta[elemento[0]]=elemento[1]
+        
+    return dicc_rta
 
 
 def pregunta_12():
@@ -257,4 +494,42 @@ def pregunta_12():
     }
 
     """
-    return
+    tup_lst=file_clean()
+    voll_liste=[]
+    letters=[]
+    buchst=[]
+    lista_rta=[]
+    dicc_rta={}
+
+    for x in range(0,len(tup_lst)):
+        a=str((tup_lst[x][4])).split(',')
+        d=tup_lst[x][0]
+        letters.append(d)
+        suma=0
+        for w in a:
+            #print(w)
+            q=int(w[4:])
+            suma+=q
+        h=(d,suma)
+        voll_liste.append(h)
+
+    for p in letters:
+        for r in p: buchst.append(r)
+
+    letters=None
+    letters=sorted(list(set(buchst)),reverse=False)
+
+    for k in letters:
+        cont=0
+        for i in voll_liste:
+            for j in i:
+                if k==j:
+                    cont+=i[1]   
+        f=(k,cont)
+        lista_rta.append(f)
+
+    for elemento in lista_rta:
+        dicc_rta[elemento[0]]=elemento[1]
+    
+    return dicc_rta
+
