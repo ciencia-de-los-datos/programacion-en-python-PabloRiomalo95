@@ -10,9 +10,11 @@ básicas.
 Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
+
 from operator import itemgetter
 import datetime
 import itertools
+
 
 def file_clean():
     tup_lst=[]
@@ -430,10 +432,47 @@ def pregunta_11():
         "f": 134,
         "g": 35,
     }
-
-
     """
-    return
+    voll_liste=[]
+    tup_lst=file_clean()
+    letters=[]
+    buchst=[]
+    lista_rta=[]
+
+    for t in range(0,len(tup_lst)):
+        e=list(str((tup_lst[t][3])).split(','))
+        l=tuple(e)
+        letters.append(l)
+        e.append(tup_lst[t][1])
+
+        def mixs(num):
+            try:
+                ele = int(num)
+                return (0, ele, '')
+            except ValueError:
+                return (1, num, '')
+
+        e.sort(key = mixs)
+        e[0]=int(e[0])
+        e=tuple(e)
+        voll_liste.append(e)
+
+    for p in letters:
+        for r in p: buchst.append(r)
+
+    letters=None
+    letters=sorted(list(set(buchst)),reverse=False)
+
+    for k in letters:
+        suma=0
+        for i in voll_liste:
+            for j in i:
+                if k==j:
+                    suma+=i[0]   
+        h=(k,suma)
+        lista_rta.append(h)
+    
+    return lista_rta
 
 
 def pregunta_12():
@@ -451,4 +490,41 @@ def pregunta_12():
     }
 
     """
-    return
+    tup_lst=file_clean()
+    voll_liste=[]
+    letters=[]
+    buchst=[]
+    lista_rta=[]
+    dicc_rta={}
+
+    for x in range(0,len(tup_lst)):
+        a=str((tup_lst[x][4])).split(',')
+        d=tup_lst[x][0]
+        letters.append(d)
+        suma=0
+        for w in a:
+            #print(w)
+            q=int(w[4:])
+            suma+=q
+        h=(d,suma)
+        voll_liste.append(h)
+
+    for p in letters:
+        for r in p: buchst.append(r)
+
+    letters=None
+    letters=sorted(list(set(buchst)),reverse=False)
+
+    for k in letters:
+        cont=0
+        for i in voll_liste:
+            for j in i:
+                if k==j:
+                    cont+=i[1]   
+        f=(k,cont)
+        lista_rta.append(f)
+
+    for elemento in lista_rta:
+        dicc_rta[elemento[0]]=elemento[1]
+    
+    return dicc_rta
