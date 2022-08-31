@@ -532,3 +532,4 @@ def pregunta_12():
         dicc_rta[elemento[0]]=elemento[1]
     
     return dicc_rta
+
